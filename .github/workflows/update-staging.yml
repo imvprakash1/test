@@ -1,0 +1,22 @@
+name: Update Staging Branch
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  updateStaging:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+      with:
+        ref: staging
+    - name: Fetch Main Branch
+      run: git fetch origin main
+
+    - name: Reset Staging to Main
+      run: |
+        git reset --hard origin/main
+        git push -f origin staging
